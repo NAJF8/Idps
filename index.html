@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDPS Study Platform - Interactive Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .menu-card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .menu-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .content-area {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .content-area.active {
+            display: block;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .section-title {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .definition-box {
+            background: #f9f9f9;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .definition-box:hover {
+            background: #f0f7ff;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.2);
+        }
+
+        .definition-box h3 {
+            color: #764ba2;
+            margin-bottom: 10px;
+        }
+
+        .definition-box p {
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .diagram-container {
+            background: #f5f5f5;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .diagram-title {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 1.2em;
+        }
+
+        .diagram {
+            display: inline-block;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .flow-item {
+            background: #667eea;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            min-width: 120px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .flow-arrow {
+            font-size: 2em;
+            color: #667eea;
+        }
+
+        .list-section {
+            margin: 30px 0;
+        }
+
+        .list-section h3 {
+            color: #764ba2;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .list-section ol, .list-section ul {
+            margin-left: 30px;
+            line-height: 2;
+        }
+
+        .list-section li {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .quiz-section {
+            margin: 30px 0;
+        }
+
+        .question-card {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .question-card.answered {
+            background: #f0fff4;
+            border-color: #48bb78;
+        }
+
+        .question-card.answered.incorrect {
+            background: #fff5f5;
+            border-color: #f56565;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .option input[type="radio"] {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .option.correct {
+            background: #e6fffa;
+            border-color: #48bb78;
+        }
+
+        .option.incorrect {
+            background: #fff5f5;
+            border-color: #f56565;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f0f7ff;
+        }
+
+        .hint-btn {
+            background: #fbbf24;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .hint-btn:hover {
+            background: #f59e0b;
+        }
+
+        .hint-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .hint-box {
+            background: #fef3c7;
+            border-left: 4px solid #fbbf24;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .hint-box.show {
+            display: block;
+        }
+
+        .submit-btn {
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: 600;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #38a169;
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            animation: slideDown 0.3s ease;
+        }
+
+        .feedback.correct {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 2px solid #48bb78;
+        }
+
+        .feedback.incorrect {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 2px solid #f56565;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 10px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .results {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .score {
+            font-size: 3em;
+            color: #667eea;
+            margin: 20px 0;
+            font-weight: 700;
+        }
+
+        .blank-input {
+            border: 2px solid #e0e0e0;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 250px;
+            transition: all 0.3s ease;
+        }
+
+        .blank-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .matching-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .matching-column h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .matching-item {
+            background: white;
+            border: 2px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: move;
+            transition: all 0.3s ease;
+        }
+
+        .matching-item:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        table tr:hover {
+            background: #f8f9ff;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-content h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .modal-content p {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .stat-box {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+        }
+
+        .stat-box h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 1.8em;
+            color: #764ba2;
+            font-weight: 700;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .main-menu {
+                grid-template-columns: 1fr;
+            }
+
+            .content-area {
+                padding: 20px;
+            }
+
+            .matching-section {
+                grid-template-columns: 1fr;
+            }
+
+            .blank-input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔐 IDPS Study Platform</h1>
+            <p>Intrusion Detection and Prevention Systems - Interactive Learning</p>
+        </header>
+
+        <!-- Main Menu -->
+        <div class="main-menu" id="mainMenu">
+            <div class="menu-card" onclick="showContent('definitions')">
+                <div class="icon">📚</div>
+                <h2>Definitions</h2>
+                <p>Learn key concepts and terminology</p>
+                <button class="btn">Study</button>
+            </div>
+
+            <div class="menu-card" onclick="showContent('diagrams')">
+                <div class="icon">📊</div>
+                <h2>Diagrams & Architecture</h2>
+                <p>Visual representations of IDPS systems</p>
+                <button class="btn">Explore</button>
+            </div>
+
+            <div class="menu-card" onclick="showContent('lists')">
+                <div class="icon">📋</div>
+                <h2>Lists & Enumerations</h2>
+                <p>Key points and categorizations</p>
+                <button class="btn">Review</button>
+            </div>
+
+            <div class="menu-card" onclick="showContent('mcq')">
+                <div class="icon">❓</div>
+                <h2>MCQ Quiz</h2>
+                <p>Test your knowledge with multiple choice questions</p>
+                <button class="btn">Start Quiz</button>
+            </div>
+
+            <div class="menu-card" onclick="showContent('blanks')">
+                <div class="icon">✏️</div>
+                <h2>Fill in the Blanks</h2>
+                <p>Complete sentences with missing terms</p>
+                <button class="btn">Practice</button>
+            </div>
+
+            <div class="menu-card" onclick="showContent('flashcards')">
+                <div class="icon">🎴</div>
+                <h2>Flashcards</h2>
+                <p>Quick review with flashcard mode</p>
+                <button class="btn">Flip</button>
+            </div>
+        </div>
+
+        <!-- Definitions Content -->
+        <div class="content-area" id="definitions">
+            <div class="back-btn" onclick="goBack()">← Back to Menu</div>
+            <h2 class="section-title">📚 Key Definitions</h2>
+
+            <div class="definition-box">
+                <h3>IDPS (Intrusion Detection and Prevention System)</h3>
+                <p>A security tool that monitors network traffic for suspicious activity, detects potential threats, and can take automated action to prevent intrusions. IDPS systems combine detection capabilities with the ability to block or prevent detected attacks.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>IDS (Intrusion Detection System)</h3>
+                <p>A monitoring tool that detects and generates alerts for suspicious or unauthorized network activity. Unlike an IPS, an IDS does not actively block traffic but serves as a detection and alerting mechanism.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>IPS (Intrusion Prevention System)</h3>
+                <p>A security system that is typically placed inline with network traffic to actively detect, alert, and block potential threats in real-time. Unlike an IDS, an IPS takes proactive action to prevent attacks.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>NIDPS (Network-Based Intrusion Detection and Prevention System)</h3>
+                <p>An IDPS that monitors network traffic at strategic points in the network, such as routers, firewalls, and network segments. NIDPS analyzes packets and flows but cannot inspect encrypted traffic like HTTPS.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>HIDPS (Host-Based Intrusion Detection and Prevention System)</h3>
+                <p>An IDPS deployed on individual hosts or servers. It monitors system logs, file access, and local processes. HIDPS can detect attacks targeting the host and inspect encrypted traffic from that host's perspective.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>WIDPS (Wireless Intrusion Detection and Prevention System)</h3>
+                <p>A specialized IDPS designed for wireless environments. WIDPS uses dedicated sensors to capture and analyze wireless traffic, specifically detecting threats like Rogue Access Points (Rogue APs) and Evil Twin attacks.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>Signature-Based Detection</h3>
+                <p>A detection methodology that relies on predefined patterns or "signatures" of known threats stored in a signature database. When traffic matches a known signature, an alert is generated. This approach is effective against known attacks but cannot detect zero-day exploits.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>Anomaly-Based Detection</h3>
+                <p>A detection methodology that establishes a baseline of normal network or system behavior and flags significant deviations from that baseline as potential threats. This approach can detect novel attacks but may generate false positives.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>Stateful Protocol Analysis</h3>
+                <p>A detection methodology that analyzes the state of network protocols and their expected behavior. It compares observed protocol behavior against known, valid protocol states and flags deviations as potential attacks.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>Heuristic-Based Detection</h3>
+                <p>A detection methodology that combines stateful protocol analysis, signature-based detection, and anomaly-based detection to provide comprehensive threat detection. It uses multiple analysis engines working together.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>Bypassing</h3>
+                <p>An attack technique where adversaries attempt to circumvent security mechanisms without distorting network traffic. This involves exploiting system vulnerabilities or gaps in monitoring to avoid detection.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>Evasion</h3>
+                <p>A set of techniques used by attackers to hide their attacks or alter their appearance so they are not detected by security systems such as firewalls or IDPS. Evasion techniques modify how attacks appear to security systems.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>SIEM (Security Information and Event Management)</h3>
+                <p>A centralized system that collects, analyzes, and correlates security events from multiple sources—including IDPS, firewalls, and servers—to provide a unified security view and enable better threat detection and response.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>Security Incident</h3>
+                <p>Any unauthorized activity or event that negatively affects the confidentiality, integrity, or availability of information or systems. Security incidents range from malware infections to data breaches.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>Packet Fragmentation (Evasion Technique)</h3>
+                <p>An evasion technique where an attacker splits a malicious payload into many small packets to avoid detection by an IDPS. The IDPS may fail to detect the attack until the packets are reassembled.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>Signature Mutation</h3>
+                <p>An evasion technique where polymorphic malware modifies its attack code so that it doesn't match known patterns in a signature database. This allows attacks to evade signature-based detection systems.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>IP Spoofing & MAC Spoofing</h3>
+                <p>Evasion techniques where attackers forge or spoof the source IP address or MAC address to mask their identity and location, making it difficult to trace attacks back to their origin.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>Blind Spot Exploitation</h3>
+                <p>A bypassing technique where attacks are launched through unmonitored channels such as USB, Wi-Fi Direct, or other network segments not covered by IDPS sensors, allowing attacks to bypass detection.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>Fileless Attacks</h3>
+                <p>Bypass techniques where malware operates entirely in memory without writing to disk, making it difficult for file-based IDPS detection mechanisms to identify the threat.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>CIA Triad</h3>
+                <p>A fundamental security model consisting of Confidentiality, Integrity, and Availability. IDPS systems help protect all three elements: Confidentiality (preventing unauthorized access), Integrity (preventing data modification), and Availability (preventing denial-of-service attacks).</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>False Positive</h3>
+                <p>A false positive occurs when an IDPS generates an alert for activity that is not actually malicious. Minimizing false positives requires proper rule tuning and sensitivity adjustments.</p>
+            </div>
+
+            <div class="definition-box">
+                <h3>Snort</h3>
+                <p>A popular open-source IDS/IPS that is lightweight and flexible. Snort is known for being multi-threaded and supporting TLS/SSL decryption, though it lacks a built-in graphical user interface.</p>
+            </div>
+        </div>
+
+        <!-- Diagrams Content -->
+        <div class="content-area" id="diagrams">
+            <div class="back-btn" onclick="goBack()">← Back to Menu</div>
+            <h2 class="section-title">📊 IDPS Architectures & Diagrams</h2>
+
+            <div class="diagram-container">
+                <div class="diagram-title">Figure 1: Signature-Based Detection Architecture</div>
+                <div class="diagram">
+                    <div class="flow-diagram">
+                        <div class="flow-item">Monitored<br>Environment</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-item">Detector</div>
+                        <div class="flow-arrow">↔</div>
+                        <div class="flow-item">Signature<br>Database</div>
+                    </div>
+                    <div class="flow-diagram">
+                        <div class="flow-item">Match?</div>
+                        <div class="flow-arrow">Yes →</div>
+                        <div class="flow-item" style="background: #f56565;">Alert</div>
+                    </div>
+                    <div class="flow-diagram">
+                        <div class="flow-item">Match?</div>
+                        <div class="flow-arrow">No →</div>
+                        <div class="flow-item" style="background: #48bb78;">No Action</div>
+                    </div>
+                </div>
+                <p style="margin-top: 15px; color: #666;">Compares network traffic against known attack signatures</p>
+            </div>
+
+            <div class="diagram-container">
+                <div class="diagram-title">Figure 2: Anomaly-Based Detection Architecture</div>
+                <div class="diagram">
+                    <div class="flow-diagram">
+                        <div class="flow-item">Monitored<br>Environment</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-item">Detector</div>
+                        <div class="flow-arrow">↔</div>
+                        <div class="flow-item">Baseline</div>
+                    </div>
+                    <div class="flow-diagram">
+                        <div class="flow-item">Normal?</div>
+                        <div class="flow-arrow">Yes →</div>
+                        <div class="flow-item" style="background: #48bb78;">No Action</div>
+                    </div>
+                    <div class="flow-diagram">
+                        <div class="flow-item">Deviation?</div>
+                        <div class="flow-arrow">Yes →</div>
+                        <div class="flow-item" style="background: #fbbf24;">Update Profile</div>
+                    </div>
+                    <div class="flow-diagram">
+                        <div class="flow-item">Deviation?</div>
+                        <div class="flow-arrow">No →</div>
+                        <div class="flow-item" style="background: #f56565;">Alert</div>
+                    </div>
+                </div>
+                <p style="margin-top: 15px; color: #666;">Detects deviations from established baseline behavior</p>
+            </div>
+
+            <div class="diagram-container">
+                <div class="diagram-title">Figure 3: Stateful Protocol Analysis Architecture</div>
+                <div class="diagram">
+                    <div class="flow-diagram">
+                        <div class="flow-item">Monitored<br>Environment</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-item">Detector</div>
+                        <div class="flow-arrow">↔</div>
+                        <div class="flow-item">Protocol<br>Database</div>
+                    </div>
+                    <div class="flow-diagram">
+                        <div class="flow-item">Expected<br>Behavior?</div>
+                        <div class="flow-arrow">Yes →</div>
+                        <div class="flow-item" style="background: #48bb78;">No Action</div>
+                    </div>
+                    <div class="flow-diagram">
+                        <div class="flow-item">Expected<br>Behavior?</div>
+                        <div class="flow-arrow">No →</div>
+                        <div class="flow-item" style="background: #f56565;">Alert</div>
+                    </div>
+                </div>
+                <p style="margin-top: 15px; color: #666;">Analyzes protocol states and expected behaviors</p>
+            </div>
+
+            <div class="diagram-container">
+                <div class="diagram-title">Figure 4: Heuristic-Based Detection Architecture</div>
+                <div class="diagram">
+                    <div class="flow-diagram">
+                        <div class="flow-item">Monitored<br>Environment</div>
+                    </div>
+                    <div class="flow-diagram">
+                        <div class="flow-item">Stateful Protocol<br>Analysis</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-item">Signature<br>Analysis</div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-item">Anomaly<br>Analysis</div>
+                    </div>
+                    <div class="flow-diagram">
+                        <div class="flow-item" style="background: #48bb78;">Sanitized<br>Environment</div>
+                    </div>
+                </div>
+                <p style="margin-top: 15px; color: #666;">Combines multiple detection methodologies for comprehensive protection</p>
+            </div>
+
+            <div class="list-section">
+                <h3>IDPS Component Architecture</h3>
+                <ol>
+                    <li><strong>Sensors/Agents:</strong> Collect data from system logs, network traffic, or host activities</li>
+                    <li><strong>Analysis Engine:</strong> Processes collected data and applies detection methodologies</li>
+                    <li><strong>Management Console:</strong> Provides centralized control and configuration interface</li>
+                    <li><strong>Alert System:</strong> Generates and delivers alerts for detected threats</li>
+                    <li><strong>Database:</strong> Stores signatures, baselines, or protocol definitions</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Lists Content -->
+        <div class="content-area" id="lists">
+            <div class="back-btn" onclick="goBack()">← Back to Menu</div>
+            <h2 class="section-title">📋 Key Lists & Enumerations</h2>
+
+            <div class="list-section">
+                <h3>IDPS Types & Deployment Models</h3>
+                <ol>
+                    <li><strong>NIDPS (Network-Based IDPS):</strong> Deployed at network perimeter, routers, and firewalls</li>
+                    <li><strong>HIDPS (Host-Based IDPS):</strong> Installed on individual systems and servers</li>
+                    <li><strong>WIDPS (Wireless IDPS):</strong> Monitors wireless networks with dedicated sensors</li>
+                    <li><strong>Hybrid IDPS:</strong> Combines multiple IDPS types for comprehensive coverage</li>
+                </ol>
+            </div>
+
+            <div class="list-section">
+                <h3>IDPS Log Contents</h3>
+                <ul>
+                    <li>Timestamp of the event</li>
+                    <li>Protocol used (TCP, UDP, ICMP, etc.)</li>
+                    <li>Source IP address and Port</li>
+                    <li>Destination IP address and Port</li>
+                    <li>Signature ID</li>
+                    <li>Alert Message</li>
+                    <li>Priority Level</li>
+                </ul>
+            </div>
+
+            <div class="list-section">
+                <h3>Detection Methodologies</h3>
+                <ol>
+                    <li><strong>Signature-Based Detection:</strong> Matches traffic against known attack signatures</li>
+                    <li><strong>Anomaly-Based Detection:</strong> Identifies deviations from normal behavior</li>
+                    <li><strong>Stateful Protocol Analysis:</strong> Validates protocol behavior against expected states</li>
+                    <li><strong>Heuristic-Based Detection:</strong> Combines multiple detection methods</li>
+                </ol>
+            </div>
+
+            <div class="list-section">
+                <h3>Bypassing Techniques</h3>
+                <ol>
+                    <li><strong>Blind Spot Exploitation:</strong> Attacking through unmonitored channels (USB, Wi-Fi Direct)</li>
+                    <li><strong>Fileless Attacks:</strong> Malware that executes entirely in memory</li>
+                    <li><strong>Rule Evasion:</strong> Bypassing specific IDPS rules and policies</li>
+                    <li><strong>Physical Bypass:</strong> Physically bypassing network security controls</li>
+                </ol>
+            </div>
+
+            <div class="list-section">
+                <h3>Evasion Techniques</h3>
+                <ol>
+                    <li><strong>Packet Fragmentation:</strong> Splitting packets to avoid signature detection</li>
+                    <li><strong>Encryption & Tunnelling:</strong> Hiding traffic inside encrypted connections</li>
+                    <li><strong>IP Spoofing & MAC Spoofing:</strong> Forging source addresses</li>
+                    <li><strong>Signature Mutation:</strong> Modifying code to avoid signature matching</li>
+                    <li><strong>Timing Attacks:</strong> Sending attacks during low-traffic periods or specific times</li>
+                    <li><strong>Protocol Misuse:</strong> Exploiting protocol specifications unexpectedly</li>
+                </ol>
+            </div>
+
+            <div class="list-section">
+                <h3>Anti-Evasion Strategies</h3>
+                <ol>
+                    <li><strong>Regular Rule & Signature Updates:</strong> Keep signature databases current</li>
+                    <li><strong>Behavioral Analysis:</strong> Implement anomaly-based detection</li>
+                    <li><strong>Packet Reassembly:</strong> Reassemble fragmented packets before analysis</li>
+                    <li><strong>SSL/TLS Inspection:</strong> Decrypt and inspect encrypted traffic (DPI)</li>
+                    <li><strong>Multi-Layer Inspection:</strong> Combine NIDPS and HIDPS</li>
+                    <li><strong>Security Awareness Training:</strong> Educate users about threats</li>
+                </ol>
+            </div>
+
+            <div class="list-section">
+                <h3>Common SIEM Tools</h3>
+                <ol>
+                    <li>IBM QRadar</li>
+                    <li>Splunk</li>
+                    <li>ArcSight</li>
+                    <li>ELK Stack</li>
+                    <li>Microsoft Sentinel</li>
+                </ol>
+            </div>
+
+            <div class="list-section">
+                <h3>SANS Incident Response Lifecycle</h3>
+                <ol>
+                    <li><strong>Preparation:</strong> Set up tools and processes for incident response</li>
+                    <li><strong>Detection & Analysis:</strong> Identify and analyze security incidents</li>
+                    <li><strong>Containment:</strong> Isolate affected systems to prevent spread</li>
+                    <li><strong>Eradication:</strong> Remove the threat from the environment</li>
+                    <li><strong>Recovery:</strong> Restore systems to normal operations</li>
+                    <li><strong>Lessons Learned:</strong> Review and improve processes</li>
+                </ol>
+            </div>
+
+            <div class="list-section">
+                <h3>Open-Source IDPS/IDS Tools</h3>
+                <ol>
+                    <li><strong>Snort:</strong> Lightweight, multi-threaded, supports TLS/SSL decryption</li>
+                    <li><strong>Suricata:</strong> Multi-threaded, faster processing, TLS/SSL support</li>
+                    <li><strong>Zeek (formerly Bro):</strong> Network monitoring with detailed logs and behavioral analysis</li>
+                    <li><strong>OSSEC:</strong> Host-based intrusion detection</li>
+                    <li><strong>Tripwire:</strong> File integrity checking</li>
+                </ol>
+            </div>
+
+            <div class="list-section">
+                <h3>Commercial IDPS Solutions</h3>
+                <ul>
+                    <li><strong>Cisco Firepower:</strong> Uses Talos Threat Intelligence platform</li>
+                    <li><strong>Palo Alto Networks Threat Prevention</strong></li>
+                    <li><strong>Fortinet FortiGate</strong></li>
+                    <li><strong>Check Point IDPS</strong></li>
+                </ul>
+            </div>
+
+            <div class="list-section">
+                <h3>IDPS Deployment Modes</h3>
+                <ul>
+                    <li><strong>Promiscuous Mode:</strong> Passive monitoring without affecting traffic (IDS)</li>
+                    <li><strong>Inline Mode:</strong> Active filtering of traffic (IPS)</li>
+                    <li><strong>Passive Mode:</strong> Monitoring without transmission</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- MCQ Quiz Content -->
+        <div class="content-area" id="mcq">
+            <div class="back-btn" onclick="goBack()">← Back to Menu</div>
+            <h2 class="section-title">❓ MCQ Practice Quiz</h2>
+            <p style="color: #666; margin-bottom: 20px;">Test your knowledge with multiple-choice questions. Click "Submit Answer" to check your response.</p>
+
+            <div class="progress-text">Question <span id="mcqCurrent">1</span> of <span id="mcqTotal">0</span></div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="mcqProgress"></div>
+            </div>
+
+            <div id="mcqContainer"></div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" onclick="startMCQQuiz()">Start MCQ Quiz</button>
+            </div>
+        </div>
+
+        <!-- Fill in the Blanks Content -->
+        <div class="content-area" id="blanks">
+            <div class="back-btn" onclick="goBack()">← Back to Menu</div>
+            <h2 class="section-title">✏️ Fill in the Blanks Quiz</h2>
+            <p style="color: #666; margin-bottom: 20px;">Complete sentences with the correct terms. Type your answer and click submit.</p>
+
+            <div class="progress-text">Question <span id="blanksCurrent">1</span> of <span id="blanksTotal">0</span></div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="blanksProgress"></div>
+            </div>
+
+            <div id="blanksContainer"></div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" onclick="startBlanksQuiz()">Start Fill in the Blanks Quiz</button>
+            </div>
+        </div>
+
+        <!-- Flashcards Content -->
+        <div class="content-area" id="flashcards">
+            <div class="back-btn" onclick="goBack()">← Back to Menu</div>
+            <h2 class="section-title">🎴 Flashcard Review</h2>
+            <p style="color: #666; margin-bottom: 20px;">Click a card to flip it. Master the key concepts with interactive flashcards.</p>
+
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div class="progress-text">Card <span id="flashCurrent">1</span> of <span id="flashTotal">0</span></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="flashProgress"></div>
+                </div>
+            </div>
+
+            <div id="flashcardsContainer"></div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" onclick="startFlashcards()">Start Flashcard Review</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Modal -->
+    <div class="modal" id="resultsModal">
+        <div class="modal-content">
+            <h2>Quiz Complete! 🎉</h2>
+            <div class="score" id="finalScore">0/0</div>
+            <p id="scoreMessage">Great effort!</p>
+            <p id="scoreDetails"></p>
+            <div class="modal-buttons">
+                <button class="btn" onclick="goBackHome()">Back to Menu</button>
+                <button class="btn btn-secondary" onclick="retakeQuiz()">Retake Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz Data
+        const mcqQuestions = [
+            {
+                id: 1,
+                question: "Which security concept is protected when an IDPS stops a Denial-of-Service (DoS) attack?",
+                options: ["A) Confidentiality", "B) Integrity", "C) Compliance", "D) Availability"],
+                correct: 3,
+                hint: "DoS attacks prevent legitimate users from accessing services. Which CIA triad component does this affect?"
+            },
+            {
+                id: 2,
+                question: "Which IDPS type would you deploy specifically to detect Rogue APs or Evil Twin attacks?",
+                options: ["A) HIDPS", "B) NIDPS", "C) Hybrid IDPS", "D) WIDPS"],
+                correct: 3,
+                hint: "These threats are specific to wireless networks. WIDPS stands for Wireless IDPS."
+            },
+            {
+                id: 3,
+                question: "Which open-source tool is known for being multi-threaded and supporting TLS/SSL decryption?",
+                options: ["A) Snort", "B) OSSEC", "C) Suricata", "D) Tripwire"],
+                correct: 2,
+                hint: "The answer is either Snort or Suricata. Suricata was specifically designed to be multi-threaded for better performance."
+            },
+            {
+                id: 4,
+                question: "Which detection mechanism in HIDPS compares files to known-good versions?",
+                options: ["A) Signature-Based", "B) Anomaly-Based", "C) Integrity Checking", "D) Policy-Based"],
+                correct: 2,
+                hint: "This involves checking if files have been modified. This is called Integrity Checking."
+            },
+            {
+                id: 5,
+                question: "Which anti-evasion strategy is used to counter Packet Fragmentation?",
+                options: ["A) Behavioral Analysis", "B) SSL/TLS Inspection", "C) Packet Reassembly", "D) Security Awareness Training"],
+                correct: 2,
+                hint: "When packets are split apart, what do we need to do before analyzing them? We need to put them back together."
+            },
+            {
+                id: 6,
+                question: "In the SANS Incident Response Lifecycle, which stage involves isolating infected systems?",
+                options: ["A) Containment", "B) Eradication", "C) Preparation", "D) Lessons Learned"],
+                correct: 0,
+                hint: "The first step is to stop the spread. Containment comes before eradication."
+            },
+            {
+                id: 7,
+                question: "Which IDPS component is responsible for collecting data from system logs or network traffic?",
+                options: ["A) Analysis Engine", "B) Sensors/Agents", "C) Management Console", "D) Alert System"],
+                correct: 1,
+                hint: "These components are deployed on networks or hosts to gather the raw data."
+            },
+            {
+                id: 8,
+                question: "An attacker splits a malicious payload into small packets to avoid detection. Which technique is this?",
+                options: ["A) IP Spoofing", "B) Packet Fragmentation", "C) Timing Attack", "D) Protocol Misuse"],
+                correct: 1,
+                hint: "This involves breaking things into small pieces. The name clearly indicates fragmentation."
+            },
+            {
+                id: 9,
+                question: "What is Signature Mutation used by polymorphic malware?",
+                options: ["A) Changing the source IP address frequently", "B) Modifying the attack code so it doesn't match known patterns", "C) Sending attacks during late-night hours", "D) Using USB to bypass the network sensor"],
+                correct: 1,
+                hint: "Signature mutation is about changing the signature itself to avoid detection."
+            },
+            {
+                id: 10,
+                question: "Which of the following is NOT typically found in an IDPS log entry?",
+                options: ["A) Source and Destination IP addresses", "B) Timestamp of the event", "C) The full social security number of the attacker", "D) Signature ID and Alert Message"],
+                correct: 2,
+                hint: "IDPS logs contain technical data, not personal information like social security numbers."
+            },
+            {
+                id: 11,
+                question: "WIDPS monitors which types of wireless frames?",
+                options: ["A) Only encrypted payloads", "B) Only email headers", "C) Management, control, and data frames", "D) Only TCP headers"],
+                correct: 2,
+                hint: "Wireless monitoring includes different frame types for complete coverage."
+            },
+            {
+                id: 12,
+                question: "Which open-source IDPS is noted for multi-threading and faster traffic processing?",
+                options: ["A) Snort", "B) Snorby", "C) Zeek", "D) Suricata"],
+                correct: 3,
+                hint: "Suricata was designed as a successor to Snort with better performance."
+            },
+            {
+                id: 13,
+                question: "What is a major disadvantage of NIDPS regarding secure communications?",
+                options: ["A) It slows down the entire CPU", "B) It cannot inspect encrypted traffic like HTTPS", "C) It only works on internal traffic", "D) It requires installation on every device"],
+                correct: 1,
+                hint: "Network-based systems can't see inside encrypted connections."
+            },
+            {
+                id: 14,
+                question: "Which threat is unique to wireless environments detected by WIDPS?",
+                options: ["A) SQL Injection", "B) Evil Twin attacks", "C) Rootkits", "D) Log Tampering"],
+                correct: 1,
+                hint: "Evil Twin is a wireless-specific attack mimicking legitimate access points."
+            },
+            {
+                id: 15,
+                question: "Which technique does NIDPS use to analyze packet headers and payloads?",
+                options: ["A) Packet Sniffing (TCP/IP analysis)", "B) File integrity checking", "C) Registry tracking", "D) RF sensor capturing"],
+                correct: 0,
+                hint: "Network-based systems analyze network traffic, not system files."
+            },
+            {
+                id: 16,
+                question: "An Intrusion Detection System (IDS) generates alerts but doesn't block traffic. Which system actively blocks threats?",
+                options: ["A) Firewall", "B) Intrusion Prevention System (IPS)", "C) SIEM", "D) Router"],
+                correct: 1,
+                hint: "The prevention system is what actively stops attacks."
+            },
+            {
+                id: 17,
+                question: "Zeek (formerly Bro) is primarily described as:",
+                options: ["A) A traditional signature-based IPS", "B) A network monitoring platform based on detailed logs and behavioral analysis", "C) A hardware-only firewall", "D) An antivirus software"],
+                correct: 1,
+                hint: "Zeek is known for detailed logging and behavioral analysis, not just signatures."
+            },
+            {
+                id: 18,
+                question: "Which commercial solution utilizes the Talos Threat Intelligence platform?",
+                options: ["A) IBM QRadar", "B) Palo Alto Networks", "C) Cisco Firepower Next-Generation IPS", "D) ELK Stack"],
+                correct: 2,
+                hint: "Talos is Cisco's threat intelligence platform."
+            },
+            {
+                id: 19,
+                question: "Which deployment mode is associated with an IPS allowing it to actively filter traffic?",
+                options: ["A) Promiscuous mode", "B) Passive mode", "C) Forensic mode", "D) Inline mode"],
+                correct: 3,
+                hint: "IPS systems must be placed 'in line' to block traffic actively."
+            },
+            {
+                id: 20,
+                question: "Attacking through unmonitored channels like USB or Wi-Fi Direct is known as:",
+                options: ["A) Evasion", "B) Encryption", "C) Blind Spot Exploitation", "D) Signature Mutation"],
+                correct: 2,
+                hint: "This is using blind spots in monitoring coverage to bypass sensors."
+            }
+        ];
+
+        const blanksQuestions = [
+            {
+                id: 1,
+                question: "An __________ is a monitoring tool that generates alerts for suspicious activity but does not block traffic.",
+                answer: "IDS",
+                alternates: ["Intrusion Detection System"],
+                hint: "It's an acronym for Intrusion Detection System."
+            },
+            {
+                id: 2,
+                question: "A __________ is placed inline with network traffic to actively detect, alert, and block potential threats in real-time.",
+                answer: "IPS",
+                alternates: ["Intrusion Prevention System"],
+                hint: "It's an acronym for Intrusion Prevention System."
+            },
+            {
+                id: 3,
+                question: "__________ detection establishes a baseline of normal activity and flags significant deviations from it.",
+                answer: "Anomaly-based",
+                alternates: ["Anomaly-Based", "Anomaly"],
+                hint: "This type of detection looks for unusual behavior patterns."
+            },
+            {
+                id: 4,
+                question: "__________ detection relies on predefined patterns of known threats stored in a signature database.",
+                answer: "Signature-based",
+                alternates: ["Signature-Based", "Signature"],
+                hint: "This compares traffic against known attack signatures."
+            },
+            {
+                id: 5,
+                question: "__________ stands for Security Information and Event Management.",
+                answer: "SIEM",
+                alternates: ["Security Information and Event Management"],
+                hint: "It's a centralized system for collecting and analyzing security events."
+            },
+            {
+                id: 6,
+                question: "__________ are unmonitored channels like USB or Wi-Fi Direct through which attackers can bypass IDPS.",
+                answer: "Blind spots",
+                alternates: ["Blind Spot Exploitation", "Blind Spot"],
+                hint: "These are gaps in monitoring coverage."
+            },
+            {
+                id: 7,
+                question: "__________ is an evasion technique where malware modifies its attack code to avoid signature matching.",
+                answer: "Signature mutation",
+                alternates: ["Signature Mutation"],
+                hint: "Used by polymorphic malware to change its appearance."
+            },
+            {
+                id: 8,
+                question: "__________ is an evasion technique where an attacker splits packets into small pieces to avoid detection.",
+                answer: "Packet fragmentation",
+                alternates: ["Packet Fragmentation"],
+                hint: "This involves breaking packets into smaller components."
+            },
+            {
+                id: 9,
+                question: "The CIA Triad consists of Confidentiality, __________, and Availability.",
+                answer: "Integrity",
+                alternates: [],
+                hint: "It's the middle component of the CIA Triad."
+            },
+            {
+                id: 10,
+                question: "__________ is a popular open-source IDS/IPS that is lightweight and lacks a built-in GUI.",
+                answer: "Snort",
+                alternates: [],
+                hint: "This is a very popular open-source tool."
+            },
+            {
+                id: 11,
+                question: "__________ IDPS uses dedicated sensors to capture and analyze wireless traffic for threats like Rogue APs.",
+                answer: "WIDPS",
+                alternates: ["Wireless IDPS", "Wireless Intrusion Detection and Prevention System"],
+                hint: "This is specifically designed for wireless environments."
+            },
+            {
+                id: 12,
+                question: "A __________ is any unauthorized activity or event that negatively affects confidentiality, integrity, or availability.",
+                answer: "security incident",
+                alternates: ["Security Incident"],
+                hint: "This is what IDPS systems are designed to detect."
+            },
+            {
+                id: 13,
+                question: "__________ is an IDPS deployed on individual hosts or servers to monitor system logs and file access.",
+                answer: "HIDPS",
+                alternates: ["Host-Based IDPS", "Host-Based Intrusion Detection and Prevention System"],
+                hint: "This stands for Host-Based IDPS."
+            },
+            {
+                id: 14,
+                question: "__________ is an IDPS that monitors network traffic at strategic points like routers and firewalls.",
+                answer: "NIDPS",
+                alternates: ["Network-Based IDPS", "Network-Based Intrusion Detection and Prevention System"],
+                hint: "This stands for Network-Based IDPS."
+            },
+            {
+                id: 15,
+                question: "To minimize false positives, administrators should perform __________ and reduce sensitivity for non-threatening routines.",
+                answer: "fine-tuning",
+                alternates: ["tuning", "Tuning", "Fine-tuning"],
+                hint: "This is adjusting IDPS rules and settings."
+            }
+        ];
+
+        const flashcardData = [
+            {
+                term: "IDPS",
+                definition: "Intrusion Detection and Prevention System - A security tool that monitors network traffic, detects threats, and can take automated action to prevent intrusions."
+            },
+            {
+                term: "IDS",
+                definition: "Intrusion Detection System - A monitoring tool that detects and generates alerts for suspicious activity but does not actively block traffic."
+            },
+            {
+                term: "IPS",
+                definition: "Intrusion Prevention System - A security system placed inline with traffic to actively detect, alert, and block potential threats in real-time."
+            },
+            {
+                term: "NIDPS",
+                definition: "Network-Based IDPS - Monitors network traffic at strategic points like routers and firewalls. Cannot inspect encrypted traffic like HTTPS."
+            },
+            {
+                term: "HIDPS",
+                definition: "Host-Based IDPS - Deployed on individual hosts/servers. Monitors system logs and file access. Can inspect encrypted traffic from host perspective."
+            },
+            {
+                term: "WIDPS",
+                definition: "Wireless IDPS - Designed for wireless environments. Uses dedicated sensors to detect Rogue APs and Evil Twin attacks."
+            },
+            {
+                term: "Signature-Based Detection",
+                definition: "Detection methodology comparing traffic against known attack signatures in a database. Effective for known attacks but cannot detect zero-day exploits."
+            },
+            {
+                term: "Anomaly-Based Detection",
+                definition: "Detection methodology that establishes baseline of normal behavior and flags significant deviations as potential threats. Can detect novel attacks."
+            },
+            {
+                term: "Stateful Protocol Analysis",
+                definition: "Detection methodology that validates protocol behavior against expected states. Detects deviations from proper protocol usage."
+            },
+            {
+                term: "Heuristic-Based Detection",
+                definition: "Detection combining stateful protocol analysis, signature-based, and anomaly-based detection for comprehensive threat detection."
+            },
+            {
+                term: "Bypassing",
+                definition: "Attack technique attempting to circumvent security mechanisms without distorting traffic, such as exploiting system vulnerabilities to avoid detection."
+            },
+            {
+                term: "Evasion",
+                definition: "Set of techniques attackers use to hide or alter attacks so they're not detected by security systems like IDPS or firewalls."
+            },
+            {
+                term: "SIEM",
+                definition: "Security Information and Event Management - Centralizes collection, analysis, and correlation of security events from multiple sources for unified security view."
+            },
+            {
+                term: "Packet Fragmentation",
+                definition: "Evasion technique where attacker splits malicious payload into small packets to avoid detection. Defends with packet reassembly."
+            },
+            {
+                term: "Signature Mutation",
+                definition: "Evasion technique where polymorphic malware modifies code to avoid matching known signatures in the database."
+            },
+            {
+                term: "Blind Spot Exploitation",
+                definition: "Bypassing technique using unmonitored channels like USB or Wi-Fi Direct to bypass IDPS sensors."
+            },
+            {
+                term: "CIA Triad",
+                definition: "Confidentiality, Integrity, Availability - The three fundamental security principles that IDPS helps protect."
+            },
+            {
+                term: "False Positive",
+                definition: "Alert generated for activity that is not actually malicious. Minimized through proper rule tuning and sensitivity adjustments."
+            },
+            {
+                term: "Snort",
+                definition: "Popular open-source IDS/IPS that is lightweight, multi-threaded, and supports TLS/SSL decryption but lacks built-in GUI."
+            },
+            {
+                term: "Suricata",
+                definition: "Open-source IDPS noted for multi-threading support and faster traffic processing compared to Snort."
+            },
+            {
+                term: "Zeek (formerly Bro)",
+                definition: "Network monitoring platform known for detailed logging and behavioral analysis rather than traditional signature-based detection."
+            },
+            {
+                term: "Cisco Firepower",
+                definition: "Commercial IDPS solution that utilizes the Talos Threat Intelligence platform for up-to-date threat data."
+            },
+            {
+                term: "SANS Incident Response",
+                definition: "Six-stage lifecycle: Preparation → Detection & Analysis → Containment → Eradication → Recovery → Lessons Learned."
+            },
+            {
+                term: "Security Incident",
+                definition: "Any unauthorized activity or event that negatively affects confidentiality, integrity, or availability of information or systems."
+            },
+            {
+                term: "Deep Packet Inspection",
+                definition: "Advanced packet filtering method examining payload data. Often used with SSL/TLS decryption to inspect encrypted traffic."
+            }
+        ];
+
+        // State Variables
+        let currentQuizType = '';
+        let currentQuestionIndex = 0;
+        let quizScore = 0;
+        let answeredQuestions = [];
+
+        // Navigation Functions
+        function showContent(contentId) {
+            document.querySelectorAll('.content-area').forEach(el => el.classList.remove('active'));
+            document.getElementById(contentId).classList.add('active');
+        }
+
+        function goBack() {
+            document.querySelectorAll('.content-area').forEach(el => el.classList.remove('active'));
+            document.getElementById('mainMenu').style.display = 'grid';
+        }
+
+        function goBackHome() {
+            document.getElementById('resultsModal').classList.remove('active');
+            goBack();
+        }
+
+        // MCQ Quiz Functions
+        function startMCQQuiz() {
+            currentQuizType = 'mcq';
+            currentQuestionIndex = 0;
+            quizScore = 0;
+            answeredQuestions = [];
+            displayMCQQuestion();
+        }
+
+        function displayMCQQuestion() {
+            const container = document.getElementById('mcqContainer');
+            const question = mcqQuestions[currentQuestionIndex];
+
+            document.getElementById('mcqCurrent').textContent = currentQuestionIndex + 1;
+            document.getElementById('mcqTotal').textContent = mcqQuestions.length;
+            document.getElementById('mcqProgress').style.width = ((currentQuestionIndex / mcqQuestions.length) * 100) + '%';
+
+            let html = `
+                <div class="question-card">
+                    <div class="question-number">Question ${currentQuestionIndex + 1} of ${mcqQuestions.length}</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options" id="optionsContainer">
+            `;
+
+            question.options.forEach((option, index) => {
+                html += `
+                    <label class="option">
+                        <input type="radio" name="mcqOption" value="${index}" onchange="selectOption(${index})">
+                        <span>${option}</span>
+                    </label>
+                `;
+            });
+
+            html += `
+                    </div>
+                    <button class="submit-btn" onclick="submitMCQAnswer()">Submit Answer</button>
+                    <button class="hint-btn" id="hintBtn" onclick="showHint()">Need Help? Show Hint</button>
+                    <div class="hint-box" id="hintBox">${question.hint}</div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function selectOption(index) {
+            // Visual feedback
+        }
+
+        function showHint() {
+            document.getElementById('hintBox').classList.add('show');
+            document.getElementById('hintBtn').disabled = true;
+        }
+
+        function submitMCQAnswer() {
+            const selectedOption = document.querySelector('input[name="mcqOption"]:checked');
+            if (!selectedOption) {
+                alert('Please select an answer');
+                return;
+            }
+
+            const selectedIndex = parseInt(selectedOption.value);
+            const question = mcqQuestions[currentQuestionIndex];
+            const isCorrect = selectedIndex === question.correct;
+
+            if (isCorrect) {
+                quizScore++;
+            }
+
+            // Show feedback
+            const options = document.querySelectorAll('.option');
+            options.forEach((opt, idx) => {
+                if (idx === question.correct) {
+                    opt.classList.add('correct');
+                } else if (idx === selectedIndex && !isCorrect) {
+                    opt.classList.add('incorrect');
+                }
+                opt.style.pointerEvents = 'none';
+            });
+
+            const feedback = document.createElement('div');
+            feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedback.textContent = isCorrect ? '✓ Correct!' : '✗ Incorrect!';
+
+            document.querySelector('.question-card').appendChild(feedback);
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < mcqQuestions.length) {
+                    displayMCQQuestion();
+                } else {
+                    showResults('mcq');
+                }
+            }, 2000);
+        }
+
+        // Blanks Quiz Functions
+        function startBlanksQuiz() {
+            currentQuizType = 'blanks';
+            currentQuestionIndex = 0;
+            quizScore = 0;
+            answeredQuestions = [];
+            displayBlanksQuestion();
+        }
+
+        function displayBlanksQuestion() {
+            const container = document.getElementById('blanksContainer');
+            const question = blanksQuestions[currentQuestionIndex];
+
+            document.getElementById('blanksCurrent').textContent = currentQuestionIndex + 1;
+            document.getElementById('blanksTotal').textContent = blanksQuestions.length;
+            document.getElementById('blanksProgress').style.width = ((currentQuestionIndex / blanksQuestions.length) * 100) + '%';
+
+            let html = `
+                <div class="question-card">
+                    <div class="question-number">Question ${currentQuestionIndex + 1} of ${blanksQuestions.length}</div>
+                    <div class="question-text">${question.question}</div>
+                    <input type="text" class="blank-input" id="blankAnswer" placeholder="Type your answer here..." onkeypress="if(event.key==='Enter') submitBlankAnswer()">
+                    <button class="submit-btn" onclick="submitBlankAnswer()">Submit Answer</button>
+                    <button class="hint-btn" id="hintBtn" onclick="showBlankHint()">Need Help? Show Hint</button>
+                    <div class="hint-box" id="hintBox">${question.hint}</div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+            document.getElementById('blankAnswer').focus();
+        }
+
+        function showBlankHint() {
+            document.getElementById('hintBox').classList.add('show');
+            document.getElementById('hintBtn').disabled = true;
+        }
+
+        function submitBlankAnswer() {
+            const userAnswer = document.getElementById('blankAnswer').value.trim().toLowerCase();
+            const question = blanksQuestions[currentQuestionIndex];
+
+            const correctAnswers = [question.answer.toLowerCase(), ...question.alternates.map(a => a.toLowerCase())];
+            const isCorrect = correctAnswers.some(ans => userAnswer === ans.toLowerCase());
+
+            if (isCorrect) {
+                quizScore++;
+            }
+
+            const input = document.getElementById('blankAnswer');
+            input.style.borderColor = isCorrect ? '#48bb78' : '#f56565';
+            input.disabled = true;
+
+            const feedback = document.createElement('div');
+            feedback.className = `feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+            feedback.innerHTML = isCorrect ? `✓ Correct!` : `✗ Incorrect!<br>Correct answer: <strong>${question.answer}</strong>`;
+
+            document.querySelector('.question-card').appendChild(feedback);
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < blanksQuestions.length) {
+                    displayBlanksQuestion();
+                } else {
+                    showResults('blanks');
+                }
+            }, 2000);
+        }
+
+        // Flashcards Functions
+        function startFlashcards() {
+            currentQuizType = 'flashcards';
+            currentQuestionIndex = 0;
+            displayFlashcard();
+        }
+
+        function displayFlashcard() {
+            const container = document.getElementById('flashcardsContainer');
+            const card = flashcardData[currentQuestionIndex];
+
+            document.getElementById('flashCurrent').textContent = currentQuestionIndex + 1;
+            document.getElementById('flashTotal').textContent = flashcardData.length;
+            document.getElementById('flashProgress').style.width = ((currentQuestionIndex / flashcardData.length) * 100) + '%';
+
+            let html = `
+                <div style="perspective: 1000px;">
+                    <div class="question-card" style="cursor: pointer; min-height: 300px; display: flex; align-items: center; justify-content: center; text-align: center;" onclick="flipFlashcard(this)">
+                        <div id="flashcardContent" style="font-size: 1.3em; font-weight: 600; color: #667eea;">
+                            ${card.term}
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 30px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-secondary" onclick="previousFlashcard()" ${currentQuestionIndex === 0 ? 'disabled' : ''}>← Previous</button>
+                    <button class="btn" onclick="nextFlashcard()" ${currentQuestionIndex === flashcardData.length - 1 ? 'disabled' : ''}>Next →</button>
+                    <button class="btn btn-secondary" onclick="shuffleFlashcards()">🔀 Shuffle</button>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        let isFlipped = false;
+
+        function flipFlashcard(element) {
+            const card = flashcardData[currentQuestionIndex];
+            const content = document.getElementById('flashcardContent');
+            isFlipped = !isFlipped;
+
+            if (isFlipped) {
+                content.textContent = card.definition;
+                element.style.background = '#f0f7ff';
+            } else {
+                content.textContent = card.term;
+                element.style.background = '#f9f9f9';
+            }
+        }
+
+        function nextFlashcard() {
+            isFlipped = false;
+            currentQuestionIndex++;
+            if (currentQuestionIndex >= flashcardData.length) {
+                currentQuestionIndex = flashcardData.length - 1;
+            }
+            displayFlashcard();
+        }
+
+        function previousFlashcard() {
+            isFlipped = false;
+            currentQuestionIndex--;
+            if (currentQuestionIndex < 0) {
+                currentQuestionIndex = 0;
+            }
+            displayFlashcard();
+        }
+
+        function shuffleFlashcards() {
+            for (let i = flashcardData.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [flashcardData[i], flashcardData[j]] = [flashcardData[j], flashcardData[i]];
+            }
+            currentQuestionIndex = 0;
+            isFlipped = false;
+            displayFlashcard();
+        }
+
+        // Results Functions
+        function showResults(quizType) {
+            const modal = document.getElementById('resultsModal');
+            const totalQuestions = quizType === 'mcq' ? mcqQuestions.length : blanksQuestions.length;
+            const percentage = Math.round((quizScore / totalQuestions) * 100);
+
+            document.getElementById('finalScore').textContent = `${quizScore}/${totalQuestions}`;
+            document.getElementById('scoreDetails').textContent = `Percentage: ${percentage}%`;
+
+            let message = '';
+            if (percentage === 100) {
+                message = 'Perfect Score! 🌟 You have mastered this material!';
+            } else if (percentage >= 80) {
+                message = 'Excellent! 🎯 You have a strong understanding!';
+            } else if (percentage >= 60) {
+                message = 'Good effort! 👍 Review the material and try again!';
+            } else {
+                message = 'Keep practicing! 💪 Review the definitions and study materials!';
+            }
+
+            document.getElementById('scoreMessage').textContent = message;
+            modal.classList.add('active');
+        }
+
+        function retakeQuiz() {
+            document.getElementById('resultsModal').classList.remove('active');
+            if (currentQuizType === 'mcq') {
+                startMCQQuiz();
+            } else if (currentQuizType === 'blanks') {
+                startBlanksQuiz();
+            }
+        }
+
+        // Initialize
+        window.onload = function() {
+            showContent('mainMenu');
+        };
+    </script>
+</body>
+</html>
